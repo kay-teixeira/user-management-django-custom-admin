@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 #from pathlib import Path
 import os
-import django_heroku
-import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 #BASE_DIR = Path(__file__).resolve().parent.parent
@@ -103,20 +101,14 @@ WSGI_APPLICATION = 'danielle.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'danielledb',
-        'USER': 'root',
-        'PASSWORD': 'root1234',
-        'TEST': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'test_danielledb'
-        },
-    },
+        'USER': 'postgres',
+        'PASSWORD': 'postgrespassword',
+        'HOST': 'db',
+        'PORT': '5432',
+    }
 }
-
-db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
-if db_from_env:
-    DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -155,5 +147,3 @@ USE_L10N = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
-django_heroku.settings(locals())  # Put it in the last line.
