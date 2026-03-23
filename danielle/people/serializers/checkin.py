@@ -43,3 +43,7 @@ class PatientCompanionCheckinSerializer(serializers.ModelSerializer):
     patient_name = serializers.CharField(required=False, allow_blank=True)
     formatted_created_at = serializers.CharField(required=False,
                                                  allow_blank=True)
+    
+    class Meta:
+        model = PatientCompanionCheckin 
+        fields = '__all__'
