@@ -13,7 +13,9 @@ admin.site.index_title = "Bem vindo! "
 class PersonAdmin(admin.ModelAdmin):
     list_display = ('name', 'born_date')
     list_filter = ['gender', 'state']
-    search_fields = ['name']
+    search_fields = ['name', 'cpf']
+    search_help_text = 'Pesquise pelo Nome ou CPF.'
+    exclude = ['is_deleted', 'deleted_at']
     fieldsets = [('Identificação', {
         'fields': [
             'name', 'mother_name', 'born_date', 'cpf', ('rg', 'rg_ssp'),
@@ -41,7 +43,9 @@ class PersonAdmin(admin.ModelAdmin):
 class CheckinAdmin(admin.ModelAdmin):
     list_display = ('person', 'reason', 'created_at')
     list_filter = ['reason']
-    search_fields = ['person']
+    search_fields = ['person__name', 'person__cpf']
+    search_help_text = 'Pesquise pelo Nome ou CPF.'
+    exclude = ['is_deleted', 'deleted_at']
     fieldsets = [('Identificação', {
         'fields': ['person', 'reason']
     }),
@@ -61,15 +65,22 @@ class CheckinAdmin(admin.ModelAdmin):
 
 class CheckoutAdmin(admin.ModelAdmin):
     list_display = ('checkin', 'created_at')
-
+    search_fields = ['checkin__person__name', 'checkin__person__cpf']
+    search_help_text = 'Pesquise pelo Nome ou CPF.'
+    exclude = ['is_deleted', 'deleted_at']
 
 class HomeServicesAdmin(admin.ModelAdmin):
     list_display = ('person', 'breakfast', 'lunch', 'snack', 'dinner',
                     'shower', 'sleep', 'created_at')
-
+    search_fields = ['person__name', 'person__cpf']
+    search_help_text = 'Pesquise pelo Nome ou CPF.'
+    exclude = ['is_deleted', 'deleted_at']
 
 class ProfessionalServicesAdmin(admin.ModelAdmin):
     list_display = ('professional', 'title', 'description', 'created_at')
+    search_fields = ['professional__name', 'professional__cpf']
+    search_help_text = 'Pesquise pelo Nome ou CPF do profissional.'
+    exclude = ['is_deleted', 'deleted_at']
 
 
 admin.site.register(Person, PersonAdmin)

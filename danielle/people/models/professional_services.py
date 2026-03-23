@@ -11,6 +11,14 @@ class ProfessionalServices(BaseModel):
     professional = models.ForeignKey(Person,
                                      on_delete=models.PROTECT,
                                      verbose_name="Profissional")
+    
+    beneficiary = models.ForeignKey(Person,
+                                    on_delete=models.PROTECT,
+                                    blank=True,
+                                    null=True,
+                                    verbose_name="Paciente/Beneficiário",
+                                    help_text="Deixe em branco se o serviço for para a casa (ex: Jardinagem).",
+                                    related_name="services_received")
 
     title = models.CharField(default="Sem título",
                              max_length=120,
