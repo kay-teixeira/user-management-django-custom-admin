@@ -4,11 +4,37 @@ from people.models import Person
 from people.models import Checkout
 from people.models import HomeServices
 from people.models import ProfessionalServices
+import csv
+from django.http import HttpResponse
 
 admin.site.site_header = "Gestão de pessoas"
 admin.site.site_title = "Gestão fácil!"
 admin.site.index_title = "Bem vindo! "
 
+@admin.action(description='Exportar selecionados para CSV (Relatório)')
+def export_to_csv(modeladmin, request, queryset):
+    
+    #Pega as colunas da tabela
+    meta = modeladmin.model._meta
+    header_names = [field.verbose_name.title() for field in meta.fields]
+
+    #Prepara o arquivo de resposta que o navegador vai fazer o download
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename={meta.verbose_name_plural}-relatorio.csv'
+    response.write(b'\xef\xbb\xbf')
+
+    #Cria o escritor do CSV
+    writer = csv.writer(response, delimiter=';') 
+
+    #Escreve o cabeçalho 
+    writer.writerow(header_names)
+
+    #Escreve os dados de cada linha que o usuário selecionou
+    for obj in queryset:
+        row = [str(getattr(obj, field.name)) for field in meta.fields]
+        writer.writerow(row)
+
+    return response
 
 class PersonAdmin(admin.ModelAdmin):
     list_display = ('name', 'born_date')
@@ -16,6 +42,7 @@ class PersonAdmin(admin.ModelAdmin):
     search_fields = ['name', 'cpf']
     search_help_text = 'Pesquise pelo Nome ou CPF.'
     exclude = ['is_deleted', 'deleted_at']
+    actions = [export_to_csv]
     fieldsets = [('Identificação', {
         'fields': [
             'name', 'mother_name', 'born_date', 'cpf', ('rg', 'rg_ssp'),
@@ -46,6 +73,7 @@ class CheckinAdmin(admin.ModelAdmin):
     search_fields = ['person__name', 'person__cpf']
     search_help_text = 'Pesquise pelo Nome ou CPF.'
     exclude = ['is_deleted', 'deleted_at']
+    actions = [export_to_csv]
     fieldsets = [('Identificação', {
         'fields': ['person', 'reason']
     }),
@@ -68,6 +96,7 @@ class CheckoutAdmin(admin.ModelAdmin):
     search_fields = ['checkin__person__name', 'checkin__person__cpf']
     search_help_text = 'Pesquise pelo Nome ou CPF.'
     exclude = ['is_deleted', 'deleted_at']
+    actions = [export_to_csv]
 
 class HomeServicesAdmin(admin.ModelAdmin):
     list_display = ('person', 'breakfast', 'lunch', 'snack', 'dinner',
@@ -75,12 +104,14 @@ class HomeServicesAdmin(admin.ModelAdmin):
     search_fields = ['person__name', 'person__cpf']
     search_help_text = 'Pesquise pelo Nome ou CPF.'
     exclude = ['is_deleted', 'deleted_at']
+    actions = [export_to_csv]
 
 class ProfessionalServicesAdmin(admin.ModelAdmin):
     list_display = ('professional', 'title', 'description', 'created_at')
     search_fields = ['professional__name', 'professional__cpf']
     search_help_text = 'Pesquise pelo Nome ou CPF do profissional.'
     exclude = ['is_deleted', 'deleted_at']
+    actions = [export_to_csv]
 
 
 admin.site.register(Person, PersonAdmin)
