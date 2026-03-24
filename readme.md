@@ -43,43 +43,77 @@ Para garantir a confiabilidade dos dados e facilitar a prestação de contas da 
 
 ## Como rodar o projeto localmente
 
-Para otimizar o processo de building, todo o setup inicial foi automatizado.
+Pensando na diversidade de ambientes operacionais, disponibilizo duas formas de executar o projeto: **Via Docker (Recomendado e Automatizado)** ou **Nativamente (Python/Venv)**. O código-fonte é o mesmo para ambas as abordagens.
 
-### Requisitos Prévios
-* **Docker** e **Docker Compose** instalados na máquina.
-* Utilitário **Make** (Nativo no Linux/Mac; no Windows via WSL ou Git Bash).
+---
 
-### 1. Setup Simplificado (Via Make)
-Na raiz do projeto, execute o comando abaixo. Ele fará o build das imagens, subirá o banco de dados, rodará as migrações e populará as tabelas com os dados de teste (fixtures):
+### Opção A: Execução via Docker (Recomendado)
+Ideal para quem deseja subir a aplicação e o banco de dados em segundos, sem instalar dependências no sistema operacional.
 
-```bash
-make setup
-```
+**Pré-requisitos por Sistema Operacional:**
+* **Windows / WSL2:** Instale o [Docker Desktop](https://www.docker.com/products/docker-desktop/). Certifique-se de ir em *Settings > Resources > WSL Integration* e ativar a chave do Ubuntu (ou sua distro).
+* **Linux (Ubuntu/Debian):** Instale o Docker Engine e o Docker Compose. Adicione seu usuário ao grupo do docker (`sudo usermod -aG docker $USER`) para conseguir rodar os comandos sem a necessidade de `sudo`.
 
-*(Se precisar desligar a aplicação e limpar o banco de dados completamente, rode: `docker-compose down -v`)*
+**Passo a passo:**
+1. Abra o terminal na raiz do projeto e execute o comando abaixo. Ele fará o build da imagem, subirá o banco PostgreSQL, aplicará as migrações e populará o banco com os dados iniciais de teste (seeds):
+   ```bash
+   make setup
+   ```
+   *(Nota: Se o seu terminal não reconhecer o `make`, execute manualmente: `docker-compose up -d` seguido de `docker-compose exec web python manage.py migrate` e a injeção dos arquivos json de seed).*
 
-> **Não possui o utilitário `make`?** Execute os comandos manualmente:
-> ```bash
-> docker-compose up -d
-> docker-compose exec web python manage.py migrate
-> docker-compose exec web python manage.py loaddata people/seed/1_pessoas.json
-> docker-compose exec web python manage.py loaddata people/seed/2_checkins.json
-> docker-compose exec web python manage.py loaddata people/seed/3_servicos.json
-> ```
+2. Crie seu usuário administrador com o comando:
+   ```bash
+   make createsuperuser
+   ```
 
-### 2. Criação do Acesso Administrativo
-Para acessar o painel de gestão, crie o seu usuário (será solicitado login, email e senha):
+---
 
-```bash
-make createsuperuser
-```
+### Opção B: Execução Nativa (Sem Docker / Venv)
+Ideal para quem prefere rodar o projeto diretamente no sistema, utilizando o ambiente virtual padrão do Python e o banco SQLite (para desenvolvimento).
 
-### 3. Acessando a Aplicação
-Com os serviços em execução, acesse as seguintes rotas no navegador:
+**Passo a passo:**
+1. Certifique-se de ter o **Python 3.10+** instalado em sua máquina.
+2. Na raiz do projeto, crie e ative um ambiente virtual:
+   ```bash
+   # No Windows (CMD/PowerShell)
+   python -m venv venv
+   venv\Scripts\activate
+
+   # No Linux / Mac / WSL
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+3. Instale as dependências do projeto:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Aplique as migrações no banco de dados:
+   ```bash
+   python manage.py migrate
+   ```
+5. Popule o banco com os dados de teste (Seeds):
+   ```bash
+   python manage.py loaddata people/seed/1_pessoas.json
+   python manage.py loaddata people/seed/2_checkins.json
+   python manage.py loaddata people/seed/3_servicos.json
+   ```
+6. Crie um usuário para acessar os painéis:
+   ```bash
+   python manage.py createsuperuser
+   ```
+7. Inicie o servidor local:
+   ```bash
+   python manage.py runserver
+   ```
+
+---
+
+### Acessando a Aplicação
+Independente do método escolhido (Docker ou Nativo), o servidor estará rodando na porta `8000`. Acesse as rotas abaixo no seu navegador:
 
 * **Dashboard Gerencial:** [http://localhost:8000/dashboard/](http://localhost:8000/dashboard/)
 * **Painel Admin:** [http://localhost:8000/admin/](http://localhost:8000/admin/)
-* **Documentação (Swagger):** [http://localhost:8000/api/docs/swagger/](http://localhost:8000/api/docs/swagger/)
+* **Documentação Mapeada (Swagger):** [http://localhost:8000/api/docs/swagger/](http://localhost:8000/api/docs/swagger/)
 
 ---
 *Desenvolvido por Kaylane Raquel.*
