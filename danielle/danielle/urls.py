@@ -12,7 +12,6 @@ urlpatterns = [
     path('users/', UserCreate.as_view(), name='user_create'),
     path('users/<int:pk>/', UserRetrieve.as_view(), name='user_retrieve'),
     path("login/", CustomObtainAuthToken.as_view(), name="login"),
-    path('api-token-auth/', obtain_auth_token, name='api_token_path'),
     
     #Rotas da Documentação
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),

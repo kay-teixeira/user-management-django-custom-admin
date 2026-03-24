@@ -152,10 +152,10 @@ USE_L10N = True
 STATIC_URL = '/static/'
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'API - Gestão de Casa de Apoio',
-    'DESCRIPTION': 'Documentação completa dos endpoints para gestão de pacientes, acompanhantes e serviços da casa.',
+    'TITLE': 'API Casa de Apoio',
+    'DESCRIPTION': 'API para gestão de check-ins e serviços.',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
-    'COMPONENT_SPLIT_REQUEST': True,
-    'SCHEMA_PATH_PREFIX': r'/api/v1/',
+    'COMPONENT_SPLIT_PATCH': False,
+    'SCHEMA_PATH_PREFIX': r'/api/v1/', 
 }
