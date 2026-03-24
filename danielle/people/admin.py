@@ -89,7 +89,10 @@ class CheckinAdmin(admin.ModelAdmin):
                      'fields': ['observation', 'active'],
                      'classes': ('collapse', ),
                  })]
-
+    def get_readonly_fields(self, request, obj=None):
+        if obj and not obj.active:
+            return self.readonly_fields + ('active',)
+        return self.readonly_fields
 
 class CheckoutAdmin(admin.ModelAdmin):
     list_display = ('checkin', 'created_at')
