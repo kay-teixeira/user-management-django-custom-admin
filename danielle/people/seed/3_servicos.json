@@ -1,0 +1,71 @@
+[
+    {
+        "model": "people.homeservices",
+        "pk": 301,
+        "fields": {
+            "person": 101,
+            "breakfast": true,
+            "lunch": true,
+            "snack": true,
+            "dinner": false,
+            "shower": true,
+            "sleep": true,
+            "created_at": "2026-03-23T10:00:00Z",
+            "updated_at": "2026-03-23T10:00:00Z"
+        }
+    },
+    {
+        "model": "people.homeservices",
+        "pk": 302,
+        "fields": {
+            "person": 102,
+            "breakfast": true,
+            "lunch": true,
+            "snack": false,
+            "dinner": true,
+            "shower": true,
+            "sleep": true,
+            "created_at": "2026-03-23T10:00:00Z",
+            "updated_at": "2026-03-23T10:00:00Z"
+        }
+    },
+    {
+        "model": "people.homeservices",
+        "pk": 303,
+        "fields": {
+            "person": 105,
+            "breakfast": false,
+            "lunch": true,
+            "snack": false,
+            "dinner": false,
+            "shower": false,
+            "sleep": false,
+            "created_at": "2026-03-23T10:00:00Z",
+            "updated_at": "2026-03-23T10:00:00Z"
+        }
+    },
+    {
+        "model": "people.professionalservices",
+        "pk": 401,
+        "fields": {
+            "professional": 103,
+            "beneficiary": 101,
+            "title": "Sessão de Fisioterapia Motora",
+            "description": "Paciente apresentou melhora na mobilidade.",
+            "created_at": "2026-03-23T10:00:00Z",
+            "updated_at": "2026-03-23T10:00:00Z"
+        }
+    },
+    {
+        "model": "people.professionalservices",
+        "pk": 402,
+        "fields": {
+            "professional": 103,
+            "beneficiary": null,
+            "title": "Reunião de Alinhamento Clínico",
+            "description": "Reunião com a diretoria da casa.",
+            "created_at": "2026-03-23T10:00:00Z",
+            "updated_at": "2026-03-23T10:00:00Z"
+        }
+    }
+]
