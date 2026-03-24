@@ -1,0 +1,62 @@
+[
+    {
+        "model": "people.person",
+        "pk": 101,
+        "fields": {
+            "name": "Dona Maria da Silva",
+            "gender": "F",
+            "residence_type": "urban",
+            "state": "SP",
+            "created_at": "2026-03-23T10:00:00Z",
+            "updated_at": "2026-03-23T10:00:00Z"
+        }
+    },
+    {
+        "model": "people.person",
+        "pk": 102,
+        "fields": {
+            "name": "Seu João da Silva",
+            "gender": "M",
+            "residence_type": "urban",
+            "state": "SP",
+            "created_at": "2026-03-23T10:00:00Z",
+            "updated_at": "2026-03-23T10:00:00Z"
+        }
+    },
+    {
+        "model": "people.person",
+        "pk": 103,
+        "fields": {
+            "name": "Dra. Danielle Albuquerque",
+            "gender": "F",
+            "residence_type": "urban",
+            "state": "MG",
+            "created_at": "2026-03-23T10:00:00Z",
+            "updated_at": "2026-03-23T10:00:00Z"
+        }
+    },
+    {
+        "model": "people.person",
+        "pk": 104,
+        "fields": {
+            "name": "Carlos Eduardo",
+            "gender": "M",
+            "residence_type": "rural",
+            "state": "MG",
+            "created_at": "2026-03-23T10:00:00Z",
+            "updated_at": "2026-03-23T10:00:00Z"
+        }
+    },
+    {
+        "model": "people.person",
+        "pk": 105,
+        "fields": {
+            "name": "Ana Costa",
+            "gender": "F",
+            "residence_type": "urban",
+            "state": "RJ",
+            "created_at": "2026-03-23T10:00:00Z",
+            "updated_at": "2026-03-23T10:00:00Z"
+        }
+    }
+]

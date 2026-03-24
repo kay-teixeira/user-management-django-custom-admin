@@ -1,0 +1,77 @@
+[
+    {
+        "model": "people.checkin",
+        "pk": 201,
+        "fields": {
+            "person": 101,
+            "companion": 102,
+            "reason": "patient",
+            "active": true,
+            "chemotherapy": true,
+            "radiotherapy": false,
+            "surgery": false,
+            "created_at": "2026-03-23T10:00:00Z",
+            "updated_at": "2026-03-23T10:00:00Z"
+        }
+    },
+    {
+        "model": "people.checkin",
+        "pk": 202,
+        "fields": {
+            "person": 102,
+            "companion": null,
+            "reason": "companion",
+            "active": true,
+            "chemotherapy": false,
+            "radiotherapy": false,
+            "surgery": false,
+            "created_at": "2026-03-23T10:00:00Z",
+            "updated_at": "2026-03-23T10:00:00Z"
+        }
+    },
+    {
+        "model": "people.checkin",
+        "pk": 203,
+        "fields": {
+            "person": 103,
+            "companion": null,
+            "reason": "professional",
+            "active": true,
+            "chemotherapy": false,
+            "radiotherapy": false,
+            "surgery": false,
+            "created_at": "2026-03-23T10:00:00Z",
+            "updated_at": "2026-03-23T10:00:00Z"
+        }
+    },
+    {
+        "model": "people.checkin",
+        "pk": 204,
+        "fields": {
+            "person": 104,
+            "companion": null,
+            "reason": "voluntary",
+            "active": true,
+            "chemotherapy": false,
+            "radiotherapy": false,
+            "surgery": false,
+            "created_at": "2026-03-23T10:00:00Z",
+            "updated_at": "2026-03-23T10:00:00Z"
+        }
+    },
+    {
+        "model": "people.checkin",
+        "pk": 205,
+        "fields": {
+            "person": 105,
+            "companion": null,
+            "reason": "visitor",
+            "active": false,
+            "chemotherapy": false,
+            "radiotherapy": false,
+            "surgery": false,
+            "created_at": "2026-03-23T10:00:00Z",
+            "updated_at": "2026-03-23T10:00:00Z"
+        }
+    }
+]

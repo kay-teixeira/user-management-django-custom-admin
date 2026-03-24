@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 #from pathlib import Path
 import os
-import django_heroku
-import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 #BASE_DIR = Path(__file__).resolve().parent.parent
@@ -50,6 +48,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'people',
     'utils',
+    'drf_spectacular'
 ]
 
 REST_FRAMEWORK = {
@@ -58,11 +57,13 @@ REST_FRAMEWORK = {
     'PAGE_SIZE':
     12,
     'DEFAULT_AUTHENTICATION_CLASSES':
-    ['rest_framework.authentication.TokenAuthentication'],
+    ['rest_framework.authentication.TokenAuthentication',
+    'rest_framework.authentication.SessionAuthentication'],
     'DEFAULT_PERMISSION_CLASSES':
     ('rest_framework.permissions.IsAuthenticated', ),
     'DEFAULT_FILTER_BACKENDS':
-    ['django_filters.rest_framework.DjangoFilterBackend']
+    ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema'
 }
 
 MIDDLEWARE = [
@@ -103,20 +104,14 @@ WSGI_APPLICATION = 'danielle.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'danielledb',
-        'USER': 'root',
-        'PASSWORD': 'root1234',
-        'TEST': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'test_danielledb'
-        },
-    },
+        'USER': 'postgres',
+        'PASSWORD': 'postgrespassword',
+        'HOST': 'db',
+        'PORT': '5432',
+    }
 }
-
-db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
-if db_from_env:
-    DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -156,4 +151,11 @@ USE_L10N = True
 
 STATIC_URL = '/static/'
 
-django_heroku.settings(locals())  # Put it in the last line.
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'API - Gestão de Casa de Apoio',
+    'DESCRIPTION': 'Documentação completa dos endpoints para gestão de pacientes, acompanhantes e serviços da casa.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SCHEMA_PATH_PREFIX': r'/api/v1/',
+}

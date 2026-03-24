@@ -1,6 +1,7 @@
 from django.db import models
 from .base import BaseModel
 from .person import Person
+from django.core.exceptions import ValidationError
 
 
 class Checkin(BaseModel):
@@ -65,6 +66,22 @@ class Checkin(BaseModel):
     @property
     def person_name(self):
         return self.person.name
+    
+    def clean(self):
+        super().clean()
+        # Se a pessoa e o status estiverem preenchidos e o check-in for ativo
+        if self.person and self.active:
+            query = Checkin.objects.filter(person=self.person, active=True)
+            
+            # Se for uma edição, exclui o próprio registro da busca
+            if self.pk:
+                query = query.exclude(pk=self.pk)
+                
+            # Se achar outro ativo, bloqueia a porta dos fundos (admin)
+            if query.exists():
+                raise ValidationError(
+                    {'person': 'Esta pessoa já possui um check-in ativo. Faça o check-out antes de registrar uma nova entrada.'}
+                )
 
     def __str__(self):
         return self.person.name + " " + self.created_at.strftime(
